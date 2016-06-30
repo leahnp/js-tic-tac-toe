@@ -32,3 +32,11 @@ button {
     table-layout: fixed; 
     border-spacing: 10px; 
   }
+
+/*button:active {
+	background-color: red;
+}
+
+button:focus {
+	background-color: red;
+}*/

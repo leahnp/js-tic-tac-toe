@@ -1,14 +1,3 @@
-// turn concept
-// whose turn is it? keep track of rounds
-// select a space/is it availablle
-// check win (define win)/loss(define loss)/draw state(define tie)
-// draw outcome
-
-// player 1 = x
-// player 0 = o
-
-// obj = { 0: [1,2,3] 1: [4,5,6]}
-
 	function TicTacToe() {
 		this.player = 1;
 		this.game_state_obj = {
@@ -16,7 +5,6 @@
 			2: []
 		};
 		this.win = false;
-		// this._callback = callback;
 	};
 
 	TicTacToe.prototype.game_play = function(id) {
@@ -55,15 +43,18 @@
 				this.new_game();
 				return "Player" + this.player + "wins!"
 			}
+
+			// see if values are in a tie
+
 			return  "Player 1: " + this.game_state_obj[1] + 
 							"Player 2: " + this.game_state_obj[2]
 		}
-
 	};
 
 	TicTacToe.prototype.new_game = function() {
 		this.player = 1;
 		this.game_state_obj = {};
+		// return ttt = undefined
 	}
 
 $(document).ready(function() {
@@ -81,23 +72,25 @@ $(document).ready(function() {
 			ttt = new TicTacToe();
 			// console.log('only once')
 		}
-
 		// if reset button, start new game
 		if (id == 'reset') {
+			console.log("RESET")
 			ttt.new_game();
+			display.text("new game")
+			return 
+
+		}
+		// put correct play symbol on board
+		if (ttt.player == 1) {
+			$(this).css('background', 'red');
+		} else {
+			$(this).css('background', 'black');
 		}
 
+
 		console.log(id);
-		// console.log('player' + ttt.player);
 
 		// update game state
 		display.text(ttt.game_play(id));
 	})
-
-	// function TicTacToe() {
-
-	// }
-
-
-
 })
