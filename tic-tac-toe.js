@@ -4,7 +4,8 @@
 			1: [],
 			2: []
 		};
-		this.win = false;
+		this.played_tiles = {};
+		// this.win = false;
 	};
 
 	TicTacToe.prototype.game_play = function(id) {
@@ -39,21 +40,23 @@
 			// see if value array elements are included in players plays
 			if (plays.includes(wins[win][0, 1, 2])) {
 				console.log(this.player + " is the winner!");
-				this.win = true;
+				// this.win = true;
 				this.new_game();
 				return "Player" + this.player + "wins!"
 			}
 
-			// see if values are in a tie
-
 			return  "Player 1: " + this.game_state_obj[1] + 
-							"Player 2: " + this.game_state_obj[2]
+							"\nPlayer 2: " + this.game_state_obj[2]
 		}
 	};
 
 	TicTacToe.prototype.new_game = function() {
 		this.player = 1;
-		this.game_state_obj = {};
+		this.game_state_obj = {
+			1: [],
+			2: []
+		};
+		this.played_tiles = {};
 	}
 
 
@@ -64,7 +67,7 @@ $(document).ready(function() {
 	var reset_button = body.children('#reset')
 	console.log('chips' + reset_button)
 	var ttt;
-	var played_tiles = {};
+	// var played_tiles = {};
 
 	reset_button.on('click', function(event) {
 		event.preventDefault();
@@ -79,21 +82,20 @@ $(document).ready(function() {
 		var class_name = this.className;
 		var id = this.id;
 
+		// start new game if user just landed on page
+		if (ttt == undefined) {
+			ttt = new TicTacToe();
+		}
+		
 		// check if tile has already been played
-		if (played_tiles[id] === 'played') {
+		if (ttt.played_tiles[id] === 'played') {
 			display.text("already played, try different tile")
 			return
 		}
 
 		// add played tile to played object
-		played_tiles[id] = 'played';
+		ttt.played_tiles[id] = 'played';
 
-
-
-		// start new game if user just landed on page
-		if (ttt == undefined) {
-			ttt = new TicTacToe();
-		}
 
 		// put correct play symbol on board
 		if (ttt.player == 1) {
@@ -101,8 +103,6 @@ $(document).ready(function() {
 		} else {
 			$(this).css('background', 'black');
 		}
-
-
 		console.log(id);
 
 		// update game state

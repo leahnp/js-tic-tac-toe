@@ -33,6 +33,19 @@ button {
     border-spacing: 10px; 
   }
 
+#reset {
+    background-color: black;
+    color: white;
+    display: inline;
+    vertical-align:middle;
+    padding: 5px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    width: 100px;
+    text-align: center;
+}
+
 /*button:active {
 	background-color: red;
 }
