@@ -54,8 +54,8 @@
 	TicTacToe.prototype.new_game = function() {
 		this.player = 1;
 		this.game_state_obj = {};
-		// return ttt = undefined
 	}
+
 
 $(document).ready(function() {
   var body = $('body');
@@ -64,11 +64,13 @@ $(document).ready(function() {
 	var reset_button = body.children('#reset')
 	console.log('chips' + reset_button)
 	var ttt;
+	var played_tiles = {};
 
 	reset_button.on('click', function(event) {
 		event.preventDefault();
 		ttt.new_game();
-		display.text("new game")
+		display.text("new game");
+		buttons.css('background', 'buttonface');
 		return 
 	});
 
@@ -76,10 +78,21 @@ $(document).ready(function() {
 		event.preventDefault();
 		var class_name = this.className;
 		var id = this.id;
+
+		// check if tile has already been played
+		if (played_tiles[id] === 'played') {
+			display.text("already played, try different tile")
+			return
+		}
+
+		// add played tile to played object
+		played_tiles[id] = 'played';
+
+
+
 		// start new game if user just landed on page
 		if (ttt == undefined) {
 			ttt = new TicTacToe();
-			// console.log('only once')
 		}
 
 		// put correct play symbol on board
