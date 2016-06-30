@@ -12,8 +12,8 @@
 	function TicTacToe() {
 		this.player = 1;
 		this.game_state_obj = {
-			0: [],
-			1: []
+			0: [1, 2],
+			1: [3, 4]
 		};
 		// this._callback = callback;
 	};
@@ -28,7 +28,8 @@
 		console.log("player " + this.player)
 
 		// add play to players tally in gamestate object
-		
+		this.game_state_obj[this.player].push(parseInt(id));
+		console.log(this.game_state_obj[this.player])
 
 	};
 
