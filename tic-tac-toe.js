@@ -61,7 +61,16 @@ $(document).ready(function() {
   var body = $('body');
   var display = body.children('.display')
 	var buttons = body.children('button');
+	var reset_button = body.children('#reset')
+	console.log('chips' + reset_button)
 	var ttt;
+
+	reset_button.on('click', function(event) {
+		event.preventDefault();
+		ttt.new_game();
+		display.text("new game")
+		return 
+	});
 
 	buttons.on('click',  function(event) {
 		event.preventDefault();
@@ -72,14 +81,7 @@ $(document).ready(function() {
 			ttt = new TicTacToe();
 			// console.log('only once')
 		}
-		// if reset button, start new game
-		if (id == 'reset') {
-			console.log("RESET")
-			ttt.new_game();
-			display.text("new game")
-			return 
 
-		}
 		// put correct play symbol on board
 		if (ttt.player == 1) {
 			$(this).css('background', 'red');
