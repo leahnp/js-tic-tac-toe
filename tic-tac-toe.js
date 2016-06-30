@@ -11,17 +11,25 @@
 
 	function TicTacToe() {
 		this.player = 1;
-		this.game_state_obj = {};
+		this.game_state_obj = {
+			0: [],
+			1: []
+		};
 		// this._callback = callback;
 	};
 
 	TicTacToe.prototype.game_play = function(id) {
+		// swap player
 		if (this.player == 1) {
 			this.player = 0;
 		} else {
 			this.player = 1;
 		};
 		console.log("player " + this.player)
+
+		// add play to players tally in gamestate object
+		
+
 	};
 
 	TicTacToe.prototype.new_game = function() {
