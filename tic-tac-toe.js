@@ -12,16 +12,17 @@
 	function TicTacToe() {
 		this.player = 1;
 		this.game_state_obj = {
-			0: [],
-			1: []
+			1: [],
+			2: []
 		};
+		this.win = false;
 		// this._callback = callback;
 	};
 
 	TicTacToe.prototype.game_play = function(id) {
 		// swap player
 		if (this.player == 1) {
-			this.player = 0;
+			this.player = 2;
 		} else {
 			this.player = 1;
 		};
@@ -34,15 +35,28 @@
 
 		var wins = {
 			0: [1, 2, 3],
-			0: [4, 5, 6], 
-			0: [7, 8, 9], 
+			1: [4, 5, 6], 
+			2: [7, 8, 9], 
 
-			0: [1, 4, 7], 
-			0: [2, 5, 8], 
-			0: [3, 6, 9], 
+			3: [1, 4, 7], 
+			4: [2, 5, 8], 
+			5: [3, 6, 9], 
 
-			0: [1, 5, 9], 
-			0: [3, 5, 7]
+			6: [1, 5, 9], 
+			7: [3, 5, 7]
+		}
+
+		// iterate through wins object to find winner
+		for (var win in wins) {
+			// see if value array elements are included in players plays
+			if (plays.includes(wins[win][0, 1, 2])) {
+				console.log(this.player + " is the winner!");
+				this.win = true;
+				this.new_game();
+				return "Player" + this.player + "wins!"
+			}
+			return  "Player 1: " + this.game_state_obj[1] + 
+							"Player 2: " + this.game_state_obj[2]
 		}
 
 	};
@@ -54,6 +68,7 @@
 
 $(document).ready(function() {
   var body = $('body');
+  var display = body.children('.display')
 	var buttons = body.children('button');
 	var ttt;
 
@@ -76,7 +91,7 @@ $(document).ready(function() {
 		// console.log('player' + ttt.player);
 
 		// update game state
-		ttt.game_play(id)
+		display.text(ttt.game_play(id));
 	})
 
 	// function TicTacToe() {
