@@ -3,10 +3,10 @@ function TicTacToe() {
 }
 
 TicTacToe.prototype.new_game = function() {
-	this.player = 2;
+	this.player = 0;
 	this.game_state_obj = {
-		1: [],
-		2: []
+		0: [],
+		1: []
 	};
 	this.played_tiles = {};
 };
@@ -45,12 +45,12 @@ TicTacToe.prototype.game_play = function(id) {
 	// id = parseInt(id);
 
 	// swap player
-	// this.player = this.player ? 0 : 1;
-	if (this.player == 1) {
-		this.player = 2;
-	} else {
-		this.player = 1;
-	}
+	this.player = this.player ? 0 : 1;
+	// if (this.player == 1) {
+	// 	this.player = 2;
+	// } else {
+	// 	this.player = 1;
+	// }
 
 	// add play to players tally in gamestate object
 	var player_state = this.game_state_obj[this.player];
@@ -63,8 +63,8 @@ TicTacToe.prototype.game_play = function(id) {
 		return "Player" + this.player + "wins!" + JSON.stringify(this.game_state_obj) + JSON.stringify(this.played_tiles);
 	}
 
-	return "Player 1 (black): " + this.game_state_obj[1] + 
-					"<br>Player 2 (red): " + this.game_state_obj[2];
+	return "Player 1 (black): " + this.game_state_obj[0] + 
+					"<br>Player 2 (red): " + this.game_state_obj[1];
 };
 
 $(document).ready(function() {
@@ -113,7 +113,4 @@ $(document).ready(function() {
 		return display.html(message);
 	})
 });
-		// start new game if user just landed on page
-		// if (ttt == undefined) {
-		// 	ttt = new TicTacToe();
-		// }
+
