@@ -6,6 +6,10 @@ Game.prototype.add_win = function(player) {
 	this.game[player] += 1;
 };
 
+Game.prototype.new_game = function() {
+	this.game = [0, 0];
+};
+
 function TicTacToe() {
 	this.new_game();
 };
@@ -123,7 +127,17 @@ $(document).ready(function() {
 	reset_button.on('click', function(event) {
 		event.preventDefault();
 		ttt.new_game();
+		display.text("New Round");
+		buttons.css('background', 'buttonface');
+		return 
+	});
+
+	new_button.on('click', function(event) {
+		event.preventDefault();
+		ttt.new_game();
+		game.new_game();
 		display.text("New Game");
+		score.html('Player O: '+ game.game[0] + '<br>Player X: ' + game.game[1]);
 		buttons.css('background', 'buttonface');
 		return 
 	});
@@ -135,7 +149,7 @@ $(document).ready(function() {
 
 		// check if tile has already been played
 		if (ttt.played_tiles[id] === 'played') {
-			display.text("Already played, try different tile.")
+			display.text("No way, buddy.")
 			return
 		};
 
@@ -151,7 +165,6 @@ $(document).ready(function() {
 
 		// update game state
 		var info = ttt.game_play(id, game);
-		console.log(game.game)
 		score.html('Player O: '+ game.game[0] + '<br>Player X: ' + game.game[1])
 		return display.text(info['message']);
 	})

@@ -27,7 +27,7 @@ body {
 	border-spacing: 10px; 
   }
 
-#reset {
+#reset, #new {
   background-color: black;
   color: white;
   display: inline;
