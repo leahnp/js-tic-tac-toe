@@ -87,6 +87,16 @@ $(document).ready(function() {
 	var reset_button = body.children('#reset');
 	var ttt = new TicTacToe();
 
+
+	body.on('mousemove', function(event) {
+	  console.log(event);
+	  var x = event.clientX;
+	  var y = event.clientY;
+	  body.textContent = x + ', ' + y;
+	  body.css('background', 'rgb(' + x + ', ' + y + ', 100)')
+	});
+
+
 	reset_button.on('click', function(event) {
 		event.preventDefault();
 		ttt.new_game();
@@ -111,7 +121,7 @@ $(document).ready(function() {
 
 		// put correct play symbol on board
 		if (ttt.player == 1) {
-			$(this).css('background', 'red');
+			$(this).css('background', 'grey');
 		} else {
 			$(this).css('background', 'black');
 		}
@@ -121,4 +131,3 @@ $(document).ready(function() {
 		return display.html(info['message']);
 	})
 });
-
