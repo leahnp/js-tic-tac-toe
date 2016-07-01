@@ -21,30 +21,33 @@ body {
 }
 
 .Row {
-    display: table;
-    width: 100%; 
-    table-layout: fixed; 
-    border-spacing: 10px; 
+	display: table;
+	width: 100%; 
+	table-layout: fixed; 
+	border-spacing: 10px; 
   }
 
 #reset {
-    background-color: black;
-    color: white;
-    display: inline;
-    vertical-align:middle;
-    padding: 5px;
-    height: 40px;
-    line-height: 40px;
-    text-decoration: none;
-    width: 100px;
-    text-align: center;
+  background-color: black;
+  color: white;
+  display: inline;
+  vertical-align:middle;
+  padding: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  width: 100px;
+  text-align: center;
 }
 
 button {
 	position: relative;
+	color: white;
+	text-align: center;
+	font-size: 24px;
 	height: 15vh;
 	width: 15vh;
-	-webkit-transition-duration: 0.4s; /* Safari */
+	-webkit-transition-duration: 0.4s;  Safari 
 	transition-duration: 0.4s;
 	overflow: hidden;
 }

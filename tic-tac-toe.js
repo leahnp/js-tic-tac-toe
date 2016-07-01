@@ -69,10 +69,21 @@ TicTacToe.prototype.game_play = function(id) {
 
 	// check for a win
 	if (this.is_winner(player_state)) {
-		// TODO make it so people cannot keep playing
+		// make it so people cannot keep playing
+		this.played_tiles = {
+			1: 'played',
+			2: 'played',
+			3: 'played',
+			4: 'played',
+			5: 'played',
+			6: 'played',
+			7: 'played',
+			8: 'played',
+			9: 'played'
+		};
 		return info = {
 									'message': this.player_names(this.player) + " wins!"
-									}
+									};
 	}
 
 	return info = {
@@ -89,7 +100,7 @@ $(document).ready(function() {
 
 
 	body.on('mousemove', function(event) {
-	  console.log(event);
+	  // console.log(event);
 	  var x = event.clientX;
 	  var y = event.clientY;
 	  body.textContent = x + ', ' + y;
