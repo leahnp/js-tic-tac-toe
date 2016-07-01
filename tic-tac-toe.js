@@ -60,18 +60,24 @@ TicTacToe.prototype.game_play = function(id) {
 	var player_state = this.game_state_obj[this.player];
 	player_state.push(id);
 
-	if (this.is_winner(player_state)) {
-		// TODO send better messages
-		return info = {
-			'message': this.player_names(this.player) + "wins!"
+	// check for tie
+	if (Object.keys(this.played_tiles).length == 9) {
+			return info = {
+									'message': "It's a tie."
+									}
+	}
 
-			}
+	// check for a win
+	if (this.is_winner(player_state)) {
+		// TODO make it so people cannot keep playing
+		return info = {
+									'message': this.player_names(this.player) + " wins!"
+									}
 	}
 
 	return info = {
-		'message' : "Player 1 (black): " + this.game_state_obj[0] + 
-					"<br>Player 2 (red): " + this.game_state_obj[1]
-				}
+									'message': "Nice play, buddy."
+									}
 };
 
 $(document).ready(function() {
@@ -84,7 +90,7 @@ $(document).ready(function() {
 	reset_button.on('click', function(event) {
 		event.preventDefault();
 		ttt.new_game();
-		display.text("new game");
+		display.text("New Game");
 		buttons.css('background', 'buttonface');
 		return 
 	});
@@ -96,7 +102,7 @@ $(document).ready(function() {
 
 		// check if tile has already been played
 		if (ttt.played_tiles[id] === 'played') {
-			display.text("already played, try different tile")
+			display.text("Already played, try different tile.")
 			return
 		};
 
