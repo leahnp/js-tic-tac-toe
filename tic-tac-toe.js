@@ -1,6 +1,14 @@
+function Game() {
+	this.game = [0, 0];
+};
+
+Game.prototype.add_win = function(player) {
+	this.game[player] += 1;
+};
+
 function TicTacToe() {
 	this.new_game();
-}
+};
 
 TicTacToe.prototype.new_game = function() {
 	this.player = 0;
@@ -50,7 +58,7 @@ TicTacToe.prototype.is_winner = function(player_state) {
 	return false;
 };
 
-TicTacToe.prototype.game_play = function(id) {
+TicTacToe.prototype.game_play = function(id, game) {
 	id = parseInt(id);
 
 	// swap player
@@ -69,6 +77,7 @@ TicTacToe.prototype.game_play = function(id) {
 
 	// check for a win
 	if (this.is_winner(player_state)) {
+		game.add_win(this.player)
 		// make it so people cannot keep playing
 		this.played_tiles = {
 			1: 'played',
@@ -94,9 +103,12 @@ TicTacToe.prototype.game_play = function(id) {
 $(document).ready(function() {
   var body = $('body');
   var display = body.children('.display');
+  var score = body.children('.score');
 	var buttons = body.children('button');
 	var reset_button = body.children('#reset');
+	var new_button = body.children('#new');
 	var ttt = new TicTacToe();
+	var game = new Game();
 
 
 	body.on('mousemove', function(event) {
@@ -138,7 +150,9 @@ $(document).ready(function() {
 		}
 
 		// update game state
-		var info = ttt.game_play(id);
-		return display.html(info['message']);
+		var info = ttt.game_play(id, game);
+		console.log(game.game)
+		score.html('Player O: '+ game.game[0] + '<br>Player X: ' + game.game[1])
+		return display.text(info['message']);
 	})
 });
