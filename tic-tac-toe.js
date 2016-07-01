@@ -1,72 +1,79 @@
-	function TicTacToe() {
-		this.player = 2;
-		this.game_state_obj = {
-			1: [],
-			2: []
-		};
-		this.played_tiles = {};
-		// this.win = false;
+function TicTacToe() {
+	this.new_game();
+}
+
+TicTacToe.prototype.new_game = function() {
+	this.player = 2;
+	this.game_state_obj = {
+		1: [],
+		2: []
 	};
+	this.played_tiles = {};
+};
 
-	TicTacToe.prototype.game_play = function(id) {
-		// swap player
-		if (this.player == 1) {
-			this.player = 2;
-		} else {
-			this.player = 1;
-		};
-		// console.log("player " + this.player)
+TicTacToe.prototype.is_winner = function(player_state) {
+	var wins = [
+		[1, 2, 3],
+		[4, 5, 6], 
+		[7, 8, 9], 
+		[1, 4, 7], 
+		[2, 5, 8], 
+		[3, 6, 9], 
+		[1, 5, 9], 
+		[3, 5, 7]
+	];
 
-		// add play to players tally in gamestate object
-		// var plays = this.game_state_obj[this.player]
-		this.game_state_obj[this.player].push(parseInt(id));
-		console.log(this.game_state_obj[this.player]);
+	for (var win of wins) {
+		var winner = true;
 
-		var wins = {
-			0: [1, 2, 3],
-			1: [4, 5, 6], 
-			2: [7, 8, 9], 
-			3: [1, 4, 7], 
-			4: [2, 5, 8], 
-			5: [3, 6, 9], 
-			6: [1, 5, 9], 
-			7: [3, 5, 7]
-		};
+		for (var id of win) {
+			if (!player_state.includes(id)) {
+				winner = false;
+				break;
+			}
+		}
 
-		// iterate through wins object to find winner
-		for (var win in wins) {
-			// console.log(win)
-			// see if value array elements are included in players plays
-			if (this.game_state_obj[this.player].includes(wins[win][0, 1, 2])) {
-				this.new_game();
-				return 'won'
-				// need to pass the real winner to statement - this is just player2 everytime
-				return "Player" + this.player + "wins!" + JSON.stringify(this.game_state_obj) + JSON.stringify(this.played_tiles)
-			};
-		};
-
-		return  "Player 1 (black): " + this.game_state_obj[1] + 
-						"<br>Player 2 (red): " + this.game_state_obj[2];
-	};
-
-	TicTacToe.prototype.new_game = function() {
-		this.player = 2;
-		this.game_state_obj = {
-			1: [],
-			2: []
-		};
-		this.played_tiles = {};
+		if (winner) {
+			return true;
+		}
 	}
 
+	return false;
+};
+
+TicTacToe.prototype.game_play = function(id) {
+	// id = parseInt(id);
+
+	// swap player
+	// this.player = this.player ? 0 : 1;
+	if (this.player == 1) {
+		this.player = 2;
+	} else {
+		this.player = 1;
+	}
+
+	// add play to players tally in gamestate object
+	var player_state = this.game_state_obj[this.player];
+	player_state.push(parseInt(id));
+	console.log(player_state);
+
+	// iterate through wins object to find winner
+	if (this.is_winner(player_state)) {
+		// need to pass the real winner to statement - this is just player2 everytime
+		return "Player" + this.player + "wins!" + JSON.stringify(this.game_state_obj) + JSON.stringify(this.played_tiles);
+	}
+
+	return "Player 1 (black): " + this.game_state_obj[1] + 
+					"<br>Player 2 (red): " + this.game_state_obj[2];
+};
 
 $(document).ready(function() {
   var body = $('body');
   var display = body.children('.display');
 	var buttons = body.children('button');
 	var reset_button = body.children('#reset');
+
 	var ttt = new TicTacToe();
-
-
 
 	reset_button.on('click', function(event) {
 		event.preventDefault();
@@ -99,21 +106,13 @@ $(document).ready(function() {
 		} else {
 			$(this).css('background', 'black');
 		}
-		// console.log(id);
 
 		// update game state
 		// I know the html is bad. 
-		var returnInfo = ttt.game_play(id);
-		if (returnInfo == 'won') {
-			// reset vars then reset buttons
-			// returnInfo = ttt.player + " player has won!"
-			// ttt.new_game();
-			// reset_button.on();
-		}
-		console.log(returnInfo);
-		return display.html(returnInfo);
+		var message = ttt.game_play(id);
+		return display.html(message);
 	})
-})
+});
 		// start new game if user just landed on page
 		// if (ttt == undefined) {
 		// 	ttt = new TicTacToe();
