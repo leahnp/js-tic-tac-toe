@@ -11,6 +11,14 @@ TicTacToe.prototype.new_game = function() {
 	this.played_tiles = {};
 };
 
+TicTacToe.prototype.player_names = function(player) {
+	if (player) {
+		return "Player X"
+	} else {
+		return "Player O"
+	}
+};
+
 TicTacToe.prototype.is_winner = function(player_state) {
 	var wins = [
 		[1, 2, 3],
@@ -23,6 +31,7 @@ TicTacToe.prototype.is_winner = function(player_state) {
 		[3, 5, 7]
 	];
 
+	// check if play wins the game
 	for (var win of wins) {
 		var winner = true;
 
@@ -42,29 +51,27 @@ TicTacToe.prototype.is_winner = function(player_state) {
 };
 
 TicTacToe.prototype.game_play = function(id) {
-	// id = parseInt(id);
+	id = parseInt(id);
 
 	// swap player
 	this.player = this.player ? 0 : 1;
-	// if (this.player == 1) {
-	// 	this.player = 2;
-	// } else {
-	// 	this.player = 1;
-	// }
 
 	// add play to players tally in gamestate object
 	var player_state = this.game_state_obj[this.player];
-	player_state.push(parseInt(id));
-	console.log(player_state);
+	player_state.push(id);
 
-	// iterate through wins object to find winner
 	if (this.is_winner(player_state)) {
-		// need to pass the real winner to statement - this is just player2 everytime
-		return "Player" + this.player + "wins!" + JSON.stringify(this.game_state_obj) + JSON.stringify(this.played_tiles);
+		// TODO send better messages
+		return info = {
+			'message': this.player_names(this.player) + "wins!"
+
+			}
 	}
 
-	return "Player 1 (black): " + this.game_state_obj[0] + 
-					"<br>Player 2 (red): " + this.game_state_obj[1];
+	return info = {
+		'message' : "Player 1 (black): " + this.game_state_obj[0] + 
+					"<br>Player 2 (red): " + this.game_state_obj[1]
+				}
 };
 
 $(document).ready(function() {
@@ -72,16 +79,12 @@ $(document).ready(function() {
   var display = body.children('.display');
 	var buttons = body.children('button');
 	var reset_button = body.children('#reset');
-
 	var ttt = new TicTacToe();
 
 	reset_button.on('click', function(event) {
 		event.preventDefault();
-		// reset game vars
 		ttt.new_game();
-		// udpate game text
 		display.text("new game");
-		// reset button faces
 		buttons.css('background', 'buttonface');
 		return 
 	});
@@ -108,9 +111,8 @@ $(document).ready(function() {
 		}
 
 		// update game state
-		// I know the html is bad. 
-		var message = ttt.game_play(id);
-		return display.html(message);
+		var info = ttt.game_play(id);
+		return display.html(info['message']);
 	})
 });
 
